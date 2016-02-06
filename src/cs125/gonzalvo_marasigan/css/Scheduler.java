@@ -29,7 +29,17 @@ public class Scheduler {
 								Integer.parseInt(row[3]));
 						processes.add(process);
 					}
-					FCFS fcfs = new FCFS(processes);
+					SchedulingAlgorithm fcfs = new FCFS(processes);
+					fcfs.performScheduling();
+					SchedulingAlgorithm sjfnp = new SJF_NP(processes);
+					sjfnp.performScheduling();
+					SchedulingAlgorithm sjfp = new SJF_P(processes);
+					sjfp.performScheduling();
+					SchedulingAlgorithm prioSched = new PrioSched(processes);
+					prioSched.performScheduling();
+					RR rr = new RR(processes);
+					rr.setQuantum(Integer.parseInt(args[1]));
+					rr.performScheduling();
 					br.close();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block

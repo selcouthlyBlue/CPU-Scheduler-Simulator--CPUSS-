@@ -5,12 +5,14 @@ public class Process implements Comparable<Process>{
 	private int iArrivalTime;
 	private int iBurstTime;
 	private int iPriority;
+	private int iWaitingTime;
+	private int iTurnaroundTime;
 	
 	public Process(int iProcessId, int iArrivalTime, int iBurstTime, int iPriority){
-		this.setiProcessId(iProcessId);
-		this.setiArrivalTime(iArrivalTime);
-		this.setiBurstTime(iBurstTime);
-		this.setiPriority(iPriority);
+		this.setProcessId(iProcessId);
+		this.setArrivalTime(iArrivalTime);
+		this.setBurstTime(iBurstTime);
+		this.setPriority(iPriority);
 	}
 	
 	@Override
@@ -18,35 +20,51 @@ public class Process implements Comparable<Process>{
 		return 0;
 	}
 
-	public int getiBurstTime() {
+	public int getBurstTime() {
 		return iBurstTime;
 	}
 
-	public void setiBurstTime(int iBurstTime) {
+	public void setBurstTime(int iBurstTime) {
 		this.iBurstTime = iBurstTime;
 	}
 
-	public int getiArrivalTime() {
+	public int getArrivalTime() {
 		return iArrivalTime;
 	}
 
-	public void setiArrivalTime(int iArrivalTime) {
+	public void setArrivalTime(int iArrivalTime) {
 		this.iArrivalTime = iArrivalTime;
 	}
 
-	public int getiPriority() {
+	public int getPriority() {
 		return iPriority;
 	}
 
-	public void setiPriority(int iPriority) {
+	public void setPriority(int iPriority) {
 		this.iPriority = iPriority;
 	}
 
-	public int getiProcessId() {
+	public int getProcessId() {
 		return iProcessId;
 	}
 
-	public void setiProcessId(int iProcessId) {
+	public void setProcessId(int iProcessId) {
 		this.iProcessId = iProcessId;
+	}
+
+	public int getWaitingTime() {
+		return iWaitingTime;
+	}
+
+	public void setWaitingTime(int iWaitingTime) {
+		this.iWaitingTime = iWaitingTime;
+	}
+
+	public int getTurnaroundTime() {
+		return iTurnaroundTime;
+	}
+
+	public void setTurnaroundTime(int iTurnaroundTime) {
+		this.iTurnaroundTime = iTurnaroundTime;
 	}
 }
