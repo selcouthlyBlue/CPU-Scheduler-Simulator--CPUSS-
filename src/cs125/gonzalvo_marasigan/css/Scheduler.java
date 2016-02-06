@@ -31,7 +31,7 @@ public class Scheduler {
 					}
 					SchedulingAlgorithm fcfs = new FCFS(processes);
 					fcfs.performScheduling();
-					SchedulingAlgorithm sjfnp = new SJF_NP(processes);
+					/*SchedulingAlgorithm sjfnp = new SJF_NP(processes);
 					sjfnp.performScheduling();
 					SchedulingAlgorithm sjfp = new SJF_P(processes);
 					sjfp.performScheduling();
@@ -40,6 +40,7 @@ public class Scheduler {
 					RR rr = new RR(processes);
 					rr.setQuantum(Integer.parseInt(args[1]));
 					rr.performScheduling();
+					 */
 					br.close();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
