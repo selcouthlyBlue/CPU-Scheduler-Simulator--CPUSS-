@@ -20,29 +20,36 @@ public class SJF_P extends SchedulingAlgorithm{
 
 	@Override
 	public void performScheduling() {
-		ArrayList<Process> queue = new ArrayList<Process>();
-		HashMap<Integer, Process> processMap = new HashMap<>();
-		for(Process process : processes){
-			processMap.put(process.getProcessId(), process);
-		}
+		ArrayList<Process> finished = new ArrayList<Process>();
 		Collections.sort(processes, new Process());
-		Process currentProcess = processes.get(0);
-		for(int t = 0; ; t++){
-			for(int i = 1; i < processes.size(); i++){
-				if(t == processes.get(i).getArrivalTime()){
-					if(currentProcess.getRemainingBTime() > processes.get(i).getRemainingBTime()){
-						//modify waiting time, start time, remaining burst time, 
-						//and end time values of currentProcess
-						if(currentProcess.getRemainingBTime() != 0){
-							queue.add(currentProcess);
-						}
-						processMap.replace(currentProcess.getProcessId(), currentProcess);
-						currentProcess = processes.get(i);
-					}
+		Process currentProcess = processes.remove(0);
+		currentProcess.setStartTime(0);
+		int t = 0;
+		while(!processes.isEmpty()){
+			Process nextProcess = processes.get(0);
+			if(t == nextProcess.getArrivalTime() || nextProcess.isDirty()){
+				nextProcess = processes.remove(0);
+				if(currentProcess.getRemainingBTime() == 0){
+					currentProcess.setWaitingTime(currentProcess.getWaitingTime() - 
+							currentProcess.getArrivalTime());
+					currentProcess.setTurnaroundTime(currentProcess.getWaitingTime() 
+							+ currentProcess.getBurstTime());
+					finished.add(currentProcess);
+					currentProcess = nextProcess;
 				}
+				if(currentProcess.getRemainingBTime() > nextProcess.getRemainingBTime()){
+					currentProcess.setEndTime(t);
+					currentProcess.setDirty(true);
+					processes.add(currentProcess);
+					nextProcess.setWaitingTime(nextProcess.getWaitingTime() + t);
+					nextProcess.setStartTime(t);
+					currentProcess = nextProcess;
+				}
+				Collections.sort(processes, new Process());
 			}
-			Collections.sort(queue, burstOrder);
-			currentProcess.setiRemainingBTime(currentProcess.getiRemainingBTime() - 1);
+			currentProcess.setRemainingBTime(currentProcess.getRemainingBTime() - 1);
+			t++;
 		}
+		this.processes = finished;
 	}
 }

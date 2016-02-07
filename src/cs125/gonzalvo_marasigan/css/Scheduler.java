@@ -34,6 +34,9 @@ public class Scheduler {
 					SchedulingAlgorithm fcfs = new FCFS(processes);
 					fcfs.performScheduling();
 					generateResult(fcfs, "fcfs_" + sCsvFile);
+					SchedulingAlgorithm sjfp = new SJF_P(processes);
+					sjfp.performScheduling();
+					generateResult(sjfp, "sjfp_" + sCsvFile);
 					/*SchedulingAlgorithm sjfnp = new SJF_NP(processes);
 					sjfnp.performScheduling();
 					SchedulingAlgorithm sjfp = new SJF_P(processes);

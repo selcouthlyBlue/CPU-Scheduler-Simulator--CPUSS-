@@ -7,11 +7,12 @@ public class Process implements Comparable<Process>, Comparator<Process>{
 	private int iArrivalTime;
 	private int iBurstTime;
 	private int iPriority;
-	private int iWaitingTime;
-	private int iTurnaroundTime;
+	private int iWaitingTime = 0;
+	private int iTurnaroundTime = 0;
 	private int iRemainingBTime;
-	private int iStartTime;
-	private int iEndTime;
+	private int iStartTime = 0;
+	private int iEndTime = 0;
+	private boolean dirty = false;
 	
 	Process(){
 		
@@ -57,14 +58,6 @@ public class Process implements Comparable<Process>, Comparator<Process>{
 		this.iProcessId = iProcessId;
 	}
 
-	public int getRemainingBTime() {
-		return getiRemainingBTime();
-	}
-
-	public void setRemainingBTime(int iRemainingBTime) {
-		this.setiRemainingBTime(iRemainingBTime);
-	}
-
 	public int getWaitingTime() {
 		return iWaitingTime;
 	}
@@ -107,11 +100,19 @@ public class Process implements Comparable<Process>, Comparator<Process>{
 		this.iEndTime = iEndTime;
 	}
 
-	public int getiRemainingBTime() {
+	public int getRemainingBTime() {
 		return iRemainingBTime;
 	}
 
-	public void setiRemainingBTime(int iRemainingBTime) {
+	public void setRemainingBTime(int iRemainingBTime) {
 		this.iRemainingBTime = iRemainingBTime;
+	}
+
+	public boolean isDirty() {
+		return dirty;
+	}
+
+	public void setDirty(boolean dirty) {
+		this.dirty = dirty;
 	}
 }
