@@ -23,12 +23,12 @@ public class FCFS extends SchedulingAlgorithm{
 			prevTurnaroundTime = process.getTurnaroundTime();
 		}
 		for(Process process: processes){
-			iAverageWaitingTime += process.getWaitingTime();
-			iAverageTurnaroundTime += process.getTurnaroundTime();
+			dAverageWaitingTime += process.getWaitingTime();
+			dAverageTurnaroundTime += process.getTurnaroundTime();
 		}
-		iAverageWaitingTime = iAverageWaitingTime/processes.size();
-		iAverageTurnaroundTime = iAverageTurnaroundTime/processes.size();
+		dAverageWaitingTime = dAverageWaitingTime/processes.size();
+		dAverageTurnaroundTime = dAverageTurnaroundTime/processes.size();
 		Collections.sort(processes);
+		
 	}
-
 }

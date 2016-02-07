@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 public abstract class SchedulingAlgorithm {
 	protected ArrayList<Process> processes;
-	protected int iAverageWaitingTime;
-	protected int iAverageTurnaroundTime;
+	protected double dAverageWaitingTime;
+	protected double dAverageTurnaroundTime;
 	
 	public SchedulingAlgorithm(ArrayList<Process> processes){
 		this.processes = processes;
@@ -15,20 +15,20 @@ public abstract class SchedulingAlgorithm {
 		return this.processes;
 	}
 	
-	public int getAverageWaitingTime() {
-		return iAverageWaitingTime;
+	public double getAverageWaitingTime() {
+		return dAverageWaitingTime;
 	}
 	
 	public void setAverageWaitingTime(int iAverageWaitingTime) {
-		this.iAverageWaitingTime = iAverageWaitingTime;
+		this.dAverageWaitingTime = iAverageWaitingTime;
 	}
 	
-	public int getAverageTurnaroundTime() {
-		return iAverageTurnaroundTime;
+	public double getAverageTurnaroundTime() {
+		return dAverageTurnaroundTime;
 	}
 	
 	public void setAverageTurnaroundTime(int iAverageTurnaroundTime) {
-		this.iAverageTurnaroundTime = iAverageTurnaroundTime;
+		this.dAverageTurnaroundTime = iAverageTurnaroundTime;
 	}
 	
 	public abstract void performScheduling();
