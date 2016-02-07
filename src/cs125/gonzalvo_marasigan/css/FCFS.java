@@ -28,6 +28,7 @@ public class FCFS extends SchedulingAlgorithm{
 		}
 		iAverageWaitingTime = iAverageWaitingTime/processes.size();
 		iAverageTurnaroundTime = iAverageTurnaroundTime/processes.size();
+		Collections.sort(processes);
 	}
 
 }
