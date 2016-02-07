@@ -1,25 +1,28 @@
 package cs125.gonzalvo_marasigan.css;
 
-public class Process implements Comparable<Process>{
+import java.util.Comparator;
+
+public class Process implements Comparable<Process>, Comparator<Process>{
 	private int iProcessId;
 	private int iArrivalTime;
 	private int iBurstTime;
 	private int iPriority;
 	private int iWaitingTime;
 	private int iTurnaroundTime;
+	private int iRemainingBTime;
+	
+	Process(){
+		
+	}
 	
 	public Process(int iProcessId, int iArrivalTime, int iBurstTime, int iPriority){
 		this.setProcessId(iProcessId);
 		this.setArrivalTime(iArrivalTime);
 		this.setBurstTime(iBurstTime);
 		this.setPriority(iPriority);
+		this.setRemainingBTime(iBurstTime);
 	}
 	
-	@Override
-	public int compareTo(Process process) {
-		return 0;
-	}
-
 	public int getBurstTime() {
 		return iBurstTime;
 	}
@@ -52,6 +55,14 @@ public class Process implements Comparable<Process>{
 		this.iProcessId = iProcessId;
 	}
 
+	public int getRemainingBTime() {
+		return iRemainingBTime;
+	}
+
+	public void setRemainingBTime(int iRemainingBTime) {
+		this.iRemainingBTime = iRemainingBTime;
+	}
+
 	public int getWaitingTime() {
 		return iWaitingTime;
 	}
@@ -66,5 +77,15 @@ public class Process implements Comparable<Process>{
 
 	public void setTurnaroundTime(int iTurnaroundTime) {
 		this.iTurnaroundTime = iTurnaroundTime;
+	}
+
+	@Override
+	public int compareTo(Process process) {
+		return Integer.compare(this.iProcessId, process.iProcessId);
+	}
+
+	@Override
+	public int compare(Process p1, Process p2) {
+		return Integer.compare(p1.iArrivalTime, p2.iArrivalTime);
 	}
 }

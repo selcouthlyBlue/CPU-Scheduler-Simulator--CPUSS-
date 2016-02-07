@@ -11,6 +11,10 @@ public abstract class SchedulingAlgorithm {
 		this.processes = processes;
 	}
 	
+	public ArrayList<Process> getResults(){
+		return this.processes;
+	}
+	
 	public int getAverageWaitingTime() {
 		return iAverageWaitingTime;
 	}

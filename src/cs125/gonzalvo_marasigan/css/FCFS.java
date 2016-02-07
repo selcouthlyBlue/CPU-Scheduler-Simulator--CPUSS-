@@ -11,7 +11,7 @@ public class FCFS extends SchedulingAlgorithm{
 
 	@Override
 	public void performScheduling() {
-		Collections.sort(processes);
+		Collections.sort(processes, new Process());
 		int prevBurstTime = 0;
 		for(Process process: processes){
 			if(prevBurstTime != 0){
@@ -22,6 +22,12 @@ public class FCFS extends SchedulingAlgorithm{
 			process.setTurnaroundTime(process.getBurstTime() - process.getArrivalTime());
 			prevBurstTime = process.getBurstTime();
 		}
+		for(Process process: processes){
+			iAverageWaitingTime += process.getWaitingTime();
+			iAverageTurnaroundTime += process.getTurnaroundTime();
+		}
+		iAverageWaitingTime = iAverageWaitingTime/processes.size();
+		iAverageTurnaroundTime = iAverageTurnaroundTime/processes.size();
 	}
 
 }

@@ -1,8 +1,10 @@
 package cs125.gonzalvo_marasigan.css;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -13,7 +15,6 @@ public class Scheduler {
 		try {
 			br = new BufferedReader(new FileReader(sCsvFile));
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			if(br != null){
@@ -31,6 +32,23 @@ public class Scheduler {
 					}
 					SchedulingAlgorithm fcfs = new FCFS(processes);
 					fcfs.performScheduling();
+					BufferedWriter bw = new BufferedWriter(new FileWriter("fcfs_" + sCsvFile, true));
+					for(Process process : fcfs.getResults()){
+						StringBuilder sb = new StringBuilder();
+						sb.append(process.getProcessId());
+						sb.append(",");
+						sb.append(process.getArrivalTime());
+						sb.append(",");
+						sb.append(process.getBurstTime());
+						sb.append(",");
+						sb.append(process.getPriority());
+						sb.append(",");
+						sb.append(process.getWaitingTime());
+						sb.append(",");
+						sb.append(process.getTurnaroundTime());
+						bw.write(sb.toString());
+					}
+					bw.close();
 					/*SchedulingAlgorithm sjfnp = new SJF_NP(processes);
 					sjfnp.performScheduling();
 					SchedulingAlgorithm sjfp = new SJF_P(processes);
