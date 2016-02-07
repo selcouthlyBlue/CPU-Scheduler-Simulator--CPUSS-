@@ -29,6 +29,5 @@ public class FCFS extends SchedulingAlgorithm{
 		dAverageWaitingTime = dAverageWaitingTime/processes.size();
 		dAverageTurnaroundTime = dAverageTurnaroundTime/processes.size();
 		Collections.sort(processes);
-		
 	}
 }

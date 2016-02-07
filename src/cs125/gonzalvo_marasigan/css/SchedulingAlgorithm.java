@@ -19,16 +19,8 @@ public abstract class SchedulingAlgorithm {
 		return dAverageWaitingTime;
 	}
 	
-	public void setAverageWaitingTime(int iAverageWaitingTime) {
-		this.dAverageWaitingTime = iAverageWaitingTime;
-	}
-	
 	public double getAverageTurnaroundTime() {
 		return dAverageTurnaroundTime;
-	}
-	
-	public void setAverageTurnaroundTime(int iAverageTurnaroundTime) {
-		this.dAverageTurnaroundTime = iAverageTurnaroundTime;
 	}
 	
 	public abstract void performScheduling();

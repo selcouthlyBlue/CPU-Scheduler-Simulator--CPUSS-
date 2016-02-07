@@ -10,6 +10,8 @@ public class Process implements Comparable<Process>, Comparator<Process>{
 	private int iWaitingTime;
 	private int iTurnaroundTime;
 	private int iRemainingBTime;
+	private int iStartTime;
+	private int iEndTime;
 	
 	Process(){
 		
@@ -56,11 +58,11 @@ public class Process implements Comparable<Process>, Comparator<Process>{
 	}
 
 	public int getRemainingBTime() {
-		return iRemainingBTime;
+		return getiRemainingBTime();
 	}
 
 	public void setRemainingBTime(int iRemainingBTime) {
-		this.iRemainingBTime = iRemainingBTime;
+		this.setiRemainingBTime(iRemainingBTime);
 	}
 
 	public int getWaitingTime() {
@@ -87,5 +89,29 @@ public class Process implements Comparable<Process>, Comparator<Process>{
 	@Override
 	public int compare(Process p1, Process p2) {
 		return Integer.compare(p1.iArrivalTime, p2.iArrivalTime);
+	}
+
+	public int getStartTime() {
+		return iStartTime;
+	}
+
+	public void setStartTime(int iStartTime) {
+		this.iStartTime = iStartTime;
+	}
+
+	public int getEndTime() {
+		return iEndTime;
+	}
+
+	public void setEndTime(int iEndTime) {
+		this.iEndTime = iEndTime;
+	}
+
+	public int getiRemainingBTime() {
+		return iRemainingBTime;
+	}
+
+	public void setiRemainingBTime(int iRemainingBTime) {
+		this.iRemainingBTime = iRemainingBTime;
 	}
 }
