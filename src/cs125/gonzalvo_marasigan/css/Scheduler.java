@@ -31,9 +31,6 @@ public class Scheduler {
 								Integer.parseInt(row[3]));
 						processes.add(process);
 					}
-					SchedulingAlgorithm fcfs = new FCFS(processes);
-					fcfs.performScheduling();
-					generateResult(fcfs, "fcfs_" + sCsvFile);
 					SchedulingAlgorithm sjfp = new SJF_P(processes);
 					sjfp.performScheduling();
 					generateResult(sjfp, "sjfp_" + sCsvFile);

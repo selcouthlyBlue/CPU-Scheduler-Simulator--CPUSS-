@@ -20,57 +20,59 @@ public class SJF_P extends SchedulingAlgorithm{
 	@Override
 	public void performScheduling() {
 		ArrayList<Process> finished = new ArrayList<Process>();
-		ArrayList<Process> queue = new ArrayList<Process>();
-		Collections.sort(processes, new Process());
-		Process currentProcess = processes.remove(0);
+		Collections.sort(this.processes, new Process());
+		Process currentProcess = this.processes.remove(0);
 		currentProcess.setStartTime(0);
 		int t = 0;
-		while(!processes.isEmpty()){
-			Process nextProcess = processes.get(0);
-			if(t == nextProcess.getArrivalTime()){
-				nextProcess = processes.remove(0);
+		while(!this.processes.isEmpty()){
+			Process nextProcess = this.processes.get(0);
+			if(t == nextProcess.getArrivalTime() || nextProcess.isDirty()){
 				if(currentProcess.getRemainingBTime() == 0){
 					currentProcess.setWaitingTime(currentProcess.getWaitingTime() - 
 							currentProcess.getArrivalTime());
 					currentProcess.setTurnaroundTime(currentProcess.getWaitingTime() 
 							+ currentProcess.getBurstTime());
 					finished.add(currentProcess);
+					for(int i = 0; i < this.processes.size(); i++){
+						if(currentProcess.getProcessId() == this.processes.get(i).getProcessId()){
+							this.processes.remove(i);
+							break;
+						}
+					}
 					currentProcess = nextProcess;
 				}
-				if(currentProcess.getRemainingBTime() > nextProcess.getRemainingBTime()){
+				Process earlyProcess = Collections.min(this.processes, burstOrder);
+				if(currentProcess.getRemainingBTime() > earlyProcess.getRemainingBTime() && earlyProcess.getArrivalTime() <= t){
+					boolean found = false;
+					for(Process process : this.processes){
+						if(process.equals(currentProcess)){
+							found = true;
+							break;
+						}
+					}
+					if(!found){
+						currentProcess.setEndTime(t);
+						this.processes.add(currentProcess);
+					}
+					earlyProcess.setWaitingTime(earlyProcess.getWaitingTime() + t - earlyProcess.getEndTime());
+					earlyProcess.setStartTime(t);
+					currentProcess = earlyProcess;
+					nextProcess = this.processes.remove(0);
+					if(!nextProcess.isDirty()){
+						nextProcess.setDirty(true);
+						this.processes.add(nextProcess);
+					}
+				}
+				else if(currentProcess.getRemainingBTime() > nextProcess.getRemainingBTime()){
 					currentProcess.setEndTime(t);
-					queue.add(currentProcess);
-					nextProcess.setWaitingTime(currentProcess.getBurstTime() 
-							- currentProcess.getRemainingBTime());
+					currentProcess.setDirty(true);
+					this.processes.add(currentProcess);
+					nextProcess = this.processes.remove(0);
+					nextProcess.setWaitingTime(nextProcess.getWaitingTime() + t - nextProcess.getEndTime());
 					nextProcess.setStartTime(t);
 					currentProcess = nextProcess;
 				}
 			}
-			Collections.sort(processes, new Process());
-			currentProcess.setRemainingBTime(currentProcess.getRemainingBTime() - 1);
-			t++;
-		}
-		Collections.sort(queue, burstOrder);
-		while(!queue.isEmpty()){
-			Process nextProcess = queue.get(0);
-			if(currentProcess.getRemainingBTime() == 0){
-				currentProcess.setWaitingTime(currentProcess.getWaitingTime() - 
-						currentProcess.getArrivalTime());
-				currentProcess.setTurnaroundTime(currentProcess.getWaitingTime() 
-						+ currentProcess.getBurstTime());
-				finished.add(currentProcess);
-				nextProcess = queue.remove(0);
-				currentProcess = nextProcess;
-			}
-			if(currentProcess.getRemainingBTime() > nextProcess.getRemainingBTime()){
-				currentProcess.setEndTime(t);
-				queue.add(currentProcess);
-				nextProcess = queue.remove(0);
-				nextProcess.setWaitingTime(nextProcess.getWaitingTime() + t);
-				nextProcess.setStartTime(t);
-				currentProcess = nextProcess;
-			}
-			Collections.sort(queue, burstOrder);
 			currentProcess.setRemainingBTime(currentProcess.getRemainingBTime() - 1);
 			t++;
 		}
