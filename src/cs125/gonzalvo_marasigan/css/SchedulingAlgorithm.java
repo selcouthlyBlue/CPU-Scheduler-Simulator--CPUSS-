@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public abstract class SchedulingAlgorithm {
 	protected ArrayList<Process> processes;
@@ -48,6 +49,16 @@ public abstract class SchedulingAlgorithm {
 		pw.println(getAverageWaitingTime());
 		pw.println(getAverageTurnaroundTime());
 		bw.close();
+	}
+	
+	public void getAverage(){
+		Collections.sort(processes);
+		for(Process process: processes){
+			dAverageWaitingTime += process.getWaitingTime();
+			dAverageTurnaroundTime += process.getTurnaroundTime();
+		}
+		dAverageWaitingTime = dAverageWaitingTime/processes.size();
+		dAverageTurnaroundTime = dAverageTurnaroundTime/processes.size();
 	}
 	
 	public abstract void performScheduling();
