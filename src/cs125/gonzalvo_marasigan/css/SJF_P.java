@@ -30,32 +30,27 @@ public class SJF_P extends SchedulingAlgorithm{
 					currentProcess = queue.remove(queue.indexOf(Collections.min(queue, burstOrder)));
 				}
 				else if(currentProcess.getRemainingBTime() > Collections.min(queue, burstOrder).getRemainingBTime()){
-					currentProcess.setEndTime(t);
+					currentProcess.stop(t);
 					queue.add(currentProcess);
 					currentProcess = queue.remove(queue.indexOf(Collections.min(queue, burstOrder)));
-					currentProcess.setStartTime(t);
-					currentProcess.setWaitingTime(currentProcess.getWaitingTime() + t - currentProcess.getEndTime());
+					currentProcess.start(t);
 				}
 			}
 			while(t != process.getArrivalTime() || currentProcess.getRemainingBTime() == 0){
 				if(currentProcess.getRemainingBTime() == 0){
-					currentProcess.setWaitingTime(currentProcess.getWaitingTime() - 
-							currentProcess.getArrivalTime());
-					currentProcess.setTurnaroundTime(currentProcess.getWaitingTime() 
-							+ currentProcess.getBurstTime());
+					currentProcess.destroy();
 					finished.add(currentProcess);
 					currentProcess = null;
 					break;
 				}
-				currentProcess.setRemainingBTime(currentProcess.getRemainingBTime() - 1);
+				currentProcess.run();
 				t++;
 			}
 			if(currentProcess != null && currentProcess.getRemainingBTime() > process.getBurstTime()){
-				currentProcess.setEndTime(t);
+				currentProcess.stop(t);
 				queue.add(currentProcess);
 				currentProcess = process;
-				currentProcess.setStartTime(t);
-				currentProcess.setWaitingTime(currentProcess.getWaitingTime() + t - currentProcess.getEndTime());
+				currentProcess.start(t);
 			} else if(currentProcess == null) {
 				currentProcess = process;
 			} else {
@@ -65,31 +60,23 @@ public class SJF_P extends SchedulingAlgorithm{
 		while(!queue.isEmpty()){
 			while(!queue.isEmpty() && currentProcess.getRemainingBTime() < Collections.min(queue, burstOrder).getRemainingBTime()){
 				if(currentProcess.getRemainingBTime() == 0){
-					currentProcess.setWaitingTime(currentProcess.getWaitingTime() - 
-							currentProcess.getArrivalTime());
-					currentProcess.setTurnaroundTime(currentProcess.getWaitingTime() 
-							+ currentProcess.getBurstTime());
+					currentProcess.destroy();
 					finished.add(currentProcess);
 					currentProcess = queue.remove(queue.indexOf(Collections.min(queue, burstOrder)));
-					currentProcess.setStartTime(t);
-					currentProcess.setWaitingTime(currentProcess.getWaitingTime() + t - currentProcess.getEndTime());
+					currentProcess.start(t);
 				}
-				currentProcess.setRemainingBTime(currentProcess.getRemainingBTime() - 1);
+				currentProcess.run();
 				t++;
 			}
 			if(currentProcess.getEndTime() != 0){
-				currentProcess.setEndTime(t);
+				currentProcess.stop(t);
 			}
 			queue.add(currentProcess);
 			currentProcess = queue.remove(queue.indexOf(Collections.min(queue, burstOrder)));
-			currentProcess.setStartTime(t);
-			currentProcess.setWaitingTime(currentProcess.getWaitingTime() + t - currentProcess.getEndTime());
+			currentProcess.start(t);
 		}
-		currentProcess.setWaitingTime(currentProcess.getWaitingTime() + t - currentProcess.getEndTime());
-		currentProcess.setWaitingTime(currentProcess.getWaitingTime() - 
-				currentProcess.getArrivalTime());
-		currentProcess.setTurnaroundTime(currentProcess.getWaitingTime() 
-				+ currentProcess.getBurstTime());
+		currentProcess.start(t);
+		currentProcess.destroy();
 		finished.add(currentProcess);
 		Collections.sort(finished);
 		processes = finished;

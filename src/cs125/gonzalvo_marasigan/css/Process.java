@@ -12,50 +12,33 @@ public class Process implements Comparable<Process>, Comparator<Process>{
 	private int iRemainingBTime;
 	private int iStartTime;
 	private int iEndTime;
-	private boolean dirty = false;
 	
 	Process(){
 		
 	}
 	
 	public Process(int iProcessId, int iArrivalTime, int iBurstTime, int iPriority){
-		this.setProcessId(iProcessId);
-		this.setArrivalTime(iArrivalTime);
-		this.setBurstTime(iBurstTime);
-		this.setPriority(iPriority);
-		this.setRemainingBTime(iBurstTime);
+		this.iProcessId = iProcessId;
+		this.iArrivalTime = iArrivalTime;
+		this.iBurstTime = iBurstTime;
+		this.iPriority = iPriority;
+		this.iRemainingBTime = iBurstTime;
 	}
 	
 	public int getBurstTime() {
 		return iBurstTime;
 	}
 
-	public void setBurstTime(int iBurstTime) {
-		this.iBurstTime = iBurstTime;
-	}
-
 	public int getArrivalTime() {
 		return iArrivalTime;
-	}
-
-	public void setArrivalTime(int iArrivalTime) {
-		this.iArrivalTime = iArrivalTime;
 	}
 
 	public int getPriority() {
 		return iPriority;
 	}
 
-	public void setPriority(int iPriority) {
-		this.iPriority = iPriority;
-	}
-
 	public int getProcessId() {
 		return iProcessId;
-	}
-
-	public void setProcessId(int iProcessId) {
-		this.iProcessId = iProcessId;
 	}
 
 	public int getWaitingTime() {
@@ -88,31 +71,29 @@ public class Process implements Comparable<Process>, Comparator<Process>{
 		return iStartTime;
 	}
 
-	public void setStartTime(int iStartTime) {
-		this.iStartTime = iStartTime;
-	}
-
 	public int getEndTime() {
 		return iEndTime;
-	}
-
-	public void setEndTime(int iEndTime) {
-		this.iEndTime = iEndTime;
 	}
 
 	public int getRemainingBTime() {
 		return iRemainingBTime;
 	}
-
-	public void setRemainingBTime(int iRemainingBTime) {
-		this.iRemainingBTime = iRemainingBTime;
+	
+	public void run(){
+		this.iRemainingBTime--;
 	}
-
-	public boolean isDirty() {
-		return dirty;
+	
+	public void start(int time){
+		this.iStartTime = time;
+		this.iWaitingTime += time - iEndTime;
 	}
-
-	public void setDirty(boolean dirty) {
-		this.dirty = dirty;
+	
+	public void stop(int time){
+		this.iEndTime = time;
+	}
+	
+	public void destroy(){
+		this.iWaitingTime -= this.iArrivalTime;
+		this.iTurnaroundTime = this.iWaitingTime + this.iBurstTime;
 	}
 }
