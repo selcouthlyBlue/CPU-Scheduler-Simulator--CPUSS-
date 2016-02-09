@@ -22,7 +22,7 @@ public class Process implements Comparable<Process>, Comparator<Process>{
 		this.iArrivalTime = iArrivalTime;
 		this.iBurstTime = iBurstTime;
 		this.iPriority = iPriority;
-		this.iRemainingBTime = iBurstTime;
+		this.iRemainingBTime = this.iBurstTime;
 	}
 	
 	public int getBurstTime() {
