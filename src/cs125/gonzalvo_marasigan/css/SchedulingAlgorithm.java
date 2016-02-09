@@ -7,6 +7,11 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+ * 
+ * @author Gonzalvo, J.; Marasigan, M.
+ *
+ */
 public abstract class SchedulingAlgorithm {
 	protected ArrayList<Process> processes;
 	protected double dAverageWaitingTime;
