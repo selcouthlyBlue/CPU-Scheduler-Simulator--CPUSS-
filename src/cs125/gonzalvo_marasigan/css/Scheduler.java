@@ -1,12 +1,9 @@
 package cs125.gonzalvo_marasigan.css;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 
 public class Scheduler {
@@ -33,7 +30,7 @@ public class Scheduler {
 					}
 					SchedulingAlgorithm sjfp = new SJF_P(processes);
 					sjfp.performScheduling();
-					generateResult(sjfp, "sjfp_" + sCsvFile);
+					sjfp.generateResult("sjfp_" + sCsvFile);
 					/*SchedulingAlgorithm sjfnp = new SJF_NP(processes);
 					sjfnp.performScheduling();
 					SchedulingAlgorithm sjfp = new SJF_P(processes);
@@ -51,28 +48,5 @@ public class Scheduler {
 				}
 			}
 		}
-	}
-
-	private static void generateResult(SchedulingAlgorithm sa, String sOutputFile) throws IOException {
-		BufferedWriter bw = new BufferedWriter(new FileWriter(sOutputFile, false));
-		PrintWriter pw = new PrintWriter(bw);
-		for(Process process : sa.getResults()){
-			StringBuilder sb = new StringBuilder();
-			sb.append(process.getProcessId());
-			sb.append(",");
-			sb.append(process.getArrivalTime());
-			sb.append(",");
-			sb.append(process.getBurstTime());
-			sb.append(",");
-			sb.append(process.getPriority());
-			sb.append(",");
-			sb.append(process.getWaitingTime());
-			sb.append(",");
-			sb.append(process.getTurnaroundTime());
-			pw.println(sb.toString());
-		}
-		pw.println(sa.getAverageWaitingTime());
-		pw.println(sa.getAverageTurnaroundTime());
-		bw.close();
 	}
 }

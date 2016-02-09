@@ -41,36 +41,38 @@ public class SJF_P extends SchedulingAlgorithm{
 					}
 					currentProcess = nextProcess;
 				}
-				Process earlyProcess = Collections.min(this.processes, burstOrder);
-				if(currentProcess.getRemainingBTime() > earlyProcess.getRemainingBTime() && earlyProcess.getArrivalTime() <= t){
-					boolean found = false;
-					for(Process process : this.processes){
-						if(process.equals(currentProcess)){
-							found = true;
-							break;
+				if(!this.processes.isEmpty()){
+					Process earlyProcess = Collections.min(this.processes, burstOrder);
+					if(currentProcess.getRemainingBTime() > earlyProcess.getRemainingBTime() && earlyProcess.getArrivalTime() <= t){
+						boolean found = false;
+						for(Process process : this.processes){
+							if(process.equals(currentProcess)){
+								found = true;
+								break;
+							}
+						}
+						if(!found){
+							currentProcess.setEndTime(t);
+							this.processes.add(currentProcess);
+						}
+						earlyProcess.setWaitingTime(earlyProcess.getWaitingTime() + t - earlyProcess.getEndTime());
+						earlyProcess.setStartTime(t);
+						currentProcess = earlyProcess;
+						nextProcess = this.processes.remove(0);
+						if(!nextProcess.isDirty()){
+							nextProcess.setDirty(true);
+							this.processes.add(nextProcess);
 						}
 					}
-					if(!found){
+					else if(currentProcess.getRemainingBTime() > nextProcess.getRemainingBTime()){
 						currentProcess.setEndTime(t);
+						currentProcess.setDirty(true);
 						this.processes.add(currentProcess);
+						nextProcess = this.processes.remove(0);
+						nextProcess.setWaitingTime(nextProcess.getWaitingTime() + t - nextProcess.getEndTime());
+						nextProcess.setStartTime(t);
+						currentProcess = nextProcess;
 					}
-					earlyProcess.setWaitingTime(earlyProcess.getWaitingTime() + t - earlyProcess.getEndTime());
-					earlyProcess.setStartTime(t);
-					currentProcess = earlyProcess;
-					nextProcess = this.processes.remove(0);
-					if(!nextProcess.isDirty()){
-						nextProcess.setDirty(true);
-						this.processes.add(nextProcess);
-					}
-				}
-				else if(currentProcess.getRemainingBTime() > nextProcess.getRemainingBTime()){
-					currentProcess.setEndTime(t);
-					currentProcess.setDirty(true);
-					this.processes.add(currentProcess);
-					nextProcess = this.processes.remove(0);
-					nextProcess.setWaitingTime(nextProcess.getWaitingTime() + t - nextProcess.getEndTime());
-					nextProcess.setStartTime(t);
-					currentProcess = nextProcess;
 				}
 			}
 			currentProcess.setRemainingBTime(currentProcess.getRemainingBTime() - 1);
