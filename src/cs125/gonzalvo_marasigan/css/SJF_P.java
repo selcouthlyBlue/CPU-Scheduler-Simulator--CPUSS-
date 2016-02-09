@@ -58,7 +58,7 @@ public class SJF_P extends SchedulingAlgorithm{
 			}
 		}
 		while(!queue.isEmpty()){
-			while(!queue.isEmpty() && currentProcess.getRemainingBTime() < Collections.min(queue, burstOrder).getRemainingBTime()){
+			while(!queue.isEmpty() && currentProcess.getRemainingBTime() <= Collections.min(queue, burstOrder).getRemainingBTime()){
 				if(currentProcess.getRemainingBTime() == 0){
 					currentProcess.destroy();
 					finished.add(currentProcess);
