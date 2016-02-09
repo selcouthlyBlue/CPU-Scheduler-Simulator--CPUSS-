@@ -28,6 +28,10 @@ public class Scheduler {
 								Integer.parseInt(row[3]));
 						processes.add(process);
 					}
+					SchedulingAlgorithm fcfs = new FCFS(processes);
+					fcfs.performScheduling();
+					fcfs.generateResult("fcfs_" + sCsvFile);
+					reset(processes);
 					SchedulingAlgorithm sjfp = new SJF_P(processes);
 					sjfp.performScheduling();
 					sjfp.generateResult("sjfp_" + sCsvFile);
@@ -50,6 +54,12 @@ public class Scheduler {
 					e.printStackTrace();
 				}
 			}
+		}
+	}
+
+	private static void reset(ArrayList<Process> processes) {
+		for(Process process : processes){
+			process.reset();
 		}
 	}
 }

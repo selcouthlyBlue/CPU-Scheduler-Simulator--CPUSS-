@@ -57,16 +57,6 @@ public class Process implements Comparable<Process>, Comparator<Process>{
 		this.iTurnaroundTime = iTurnaroundTime;
 	}
 
-	@Override
-	public int compareTo(Process process) {
-		return Integer.compare(this.iProcessId, process.iProcessId);
-	}
-
-	@Override
-	public int compare(Process p1, Process p2) {
-		return Integer.compare(p1.iArrivalTime, p2.iArrivalTime);
-	}
-
 	public int getStartTime() {
 		return iStartTime;
 	}
@@ -84,7 +74,7 @@ public class Process implements Comparable<Process>, Comparator<Process>{
 	}
 	
 	public void start(int time){
-		this.iStartTime = time;
+		this.iStartTime = time - 1;
 		this.iWaitingTime += time - iEndTime;
 	}
 	
@@ -92,8 +82,27 @@ public class Process implements Comparable<Process>, Comparator<Process>{
 		this.iEndTime = time;
 	}
 	
-	public void destroy(){
+	public void destroy(int time){
+		this.iEndTime = time;
 		this.iWaitingTime -= this.iArrivalTime;
 		this.iTurnaroundTime = this.iWaitingTime + this.iBurstTime;
+	}
+	
+	public void reset(){
+		this.iRemainingBTime = this.iBurstTime;
+		this.iWaitingTime = 0;
+		this.iTurnaroundTime = 0;
+		this.iStartTime = 0;
+		this.iEndTime = 0;
+	}
+
+	@Override
+	public int compareTo(Process process) {
+		return Integer.compare(this.iProcessId, process.iProcessId);
+	}
+
+	@Override
+	public int compare(Process p1, Process p2) {
+		return Integer.compare(p1.iArrivalTime, p2.iArrivalTime);
 	}
 }

@@ -38,7 +38,7 @@ public class SJF_P extends SchedulingAlgorithm{
 			}
 			while(t != process.getArrivalTime() || currentProcess.getRemainingBTime() == 0){
 				if(currentProcess.getRemainingBTime() == 0){
-					currentProcess.destroy();
+					currentProcess.destroy(t);
 					finished.add(currentProcess);
 					currentProcess = null;
 					break;
@@ -60,7 +60,7 @@ public class SJF_P extends SchedulingAlgorithm{
 		while(!queue.isEmpty()){
 			while(!queue.isEmpty() && currentProcess.getRemainingBTime() <= Collections.min(queue, burstOrder).getRemainingBTime()){
 				if(currentProcess.getRemainingBTime() == 0){
-					currentProcess.destroy();
+					currentProcess.destroy(t);
 					finished.add(currentProcess);
 					currentProcess = queue.remove(queue.indexOf(Collections.min(queue, burstOrder)));
 					currentProcess.start(t);
@@ -76,7 +76,7 @@ public class SJF_P extends SchedulingAlgorithm{
 			currentProcess.start(t);
 		}
 		currentProcess.start(t);
-		currentProcess.destroy();
+		currentProcess.destroy(t);
 		finished.add(currentProcess);
 		Collections.sort(finished);
 		processes = finished;
