@@ -7,8 +7,8 @@ public class Process implements Comparable<Process>, Comparator<Process>{
 	private int iArrivalTime;
 	private int iBurstTime;
 	private int iPriority;
-	private int iWaitingTime = 0;
-	private int iTurnaroundTime = 0;
+	private int iWaitingTime;
+	private int iTurnaroundTime;
 	private int iRemainingBTime;
 	private int iStartTime;
 	private int iEndTime;
