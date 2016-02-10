@@ -13,11 +13,9 @@ public class FCFS extends SchedulingAlgorithm{
 	public void performScheduling() {
 		Collections.sort(processes, new Process());
 		int prevTurnaroundTime = 0;
-		int t = 0;
 		for(Process process: processes){
-			t += prevTurnaroundTime - process.getArrivalTime();
-			process.start(t);
-			process.destroy(t);
+			process.start(prevTurnaroundTime);
+			process.destroy(prevTurnaroundTime);
 			prevTurnaroundTime = process.getTurnaroundTime();
 		}
 		getAverage();
