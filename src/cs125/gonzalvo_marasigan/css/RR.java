@@ -6,8 +6,9 @@ public class RR extends SchedulingAlgorithm {
 	
 	private int iQuantum;
 
-	public RR(ArrayList<Process> processes) {
+	public RR(ArrayList<Process> processes, int iQuantum) {
 		super(processes);
+		this.iQuantum = iQuantum;
 	}
 
 	@Override
@@ -15,8 +16,8 @@ public class RR extends SchedulingAlgorithm {
 		// TODO Auto-generated method stub
 	}
 
-	public void setQuantum(int iQuantum) {
-		this.iQuantum = iQuantum;
+	public int getQuantum() {
+		return iQuantum;
 	}
 
 }
