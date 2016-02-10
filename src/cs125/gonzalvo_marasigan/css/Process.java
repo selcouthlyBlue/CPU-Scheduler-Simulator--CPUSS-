@@ -10,6 +10,7 @@ public class Process implements Comparable<Process>, Comparator<Process>{
 	private int iWaitingTime;
 	private int iTurnaroundTime;
 	private int iRemainingBTime;
+	private int iCurrentPriority;
 	private int iStartTime;
 	private int iEndTime;
 	
@@ -23,8 +24,15 @@ public class Process implements Comparable<Process>, Comparator<Process>{
 		this.iBurstTime = iBurstTime;
 		this.iPriority = iPriority;
 		this.iRemainingBTime = this.iBurstTime;
+		this.iCurrentPriority = this.iPriority;
 	}
 	
+	public Process(int processId, int startTime, int endTime) {
+		this.iProcessId = processId;
+		this.iStartTime = startTime;
+		this.iEndTime = endTime;
+	}
+
 	public int getBurstTime() {
 		return iBurstTime;
 	}
@@ -40,7 +48,7 @@ public class Process implements Comparable<Process>, Comparator<Process>{
 	public int getProcessId() {
 		return iProcessId;
 	}
-
+	
 	public int getWaitingTime() {
 		return iWaitingTime;
 	}
@@ -69,12 +77,20 @@ public class Process implements Comparable<Process>, Comparator<Process>{
 		return iRemainingBTime;
 	}
 	
+	public int getCurrentPriority() {
+		return iCurrentPriority;
+	}
+
+	public void age() {
+		this.iCurrentPriority++;
+	}
+
 	public void run(){
 		this.iRemainingBTime--;
 	}
 	
 	public void start(int time){
-		this.iStartTime = time - 1;
+		this.iStartTime = time;
 		this.iWaitingTime += time - iEndTime;
 	}
 	
@@ -83,13 +99,14 @@ public class Process implements Comparable<Process>, Comparator<Process>{
 	}
 	
 	public void destroy(int time){
-		this.iEndTime = time;
+		this.iEndTime = time + this.iRemainingBTime;
 		this.iWaitingTime -= this.iArrivalTime;
 		this.iTurnaroundTime = this.iWaitingTime + this.iBurstTime;
 	}
 	
 	public void reset(){
 		this.iRemainingBTime = this.iBurstTime;
+		this.iCurrentPriority = this.iPriority;
 		this.iWaitingTime = 0;
 		this.iTurnaroundTime = 0;
 		this.iStartTime = 0;

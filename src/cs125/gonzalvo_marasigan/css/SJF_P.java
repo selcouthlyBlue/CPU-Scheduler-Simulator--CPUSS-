@@ -31,6 +31,8 @@ public class SJF_P extends SchedulingAlgorithm{
 				}
 				else if(currentProcess.getRemainingBTime() > Collections.min(queue, burstOrder).getRemainingBTime()){
 					currentProcess.stop(t);
+					timeline.add(new Process(currentProcess.getProcessId(), 
+							currentProcess.getStartTime(), currentProcess.getEndTime()));
 					queue.add(currentProcess);
 					currentProcess = queue.remove(queue.indexOf(Collections.min(queue, burstOrder)));
 					currentProcess.start(t);
@@ -39,6 +41,8 @@ public class SJF_P extends SchedulingAlgorithm{
 			while(t != process.getArrivalTime() || currentProcess.getRemainingBTime() == 0){
 				if(currentProcess.getRemainingBTime() == 0){
 					currentProcess.destroy(t);
+					timeline.add(new Process(currentProcess.getProcessId(), 
+							currentProcess.getStartTime(), currentProcess.getEndTime()));
 					finished.add(currentProcess);
 					currentProcess = null;
 					break;
@@ -48,6 +52,8 @@ public class SJF_P extends SchedulingAlgorithm{
 			}
 			if(currentProcess != null && currentProcess.getRemainingBTime() > process.getBurstTime()){
 				currentProcess.stop(t);
+				timeline.add(new Process(currentProcess.getProcessId(), 
+						currentProcess.getStartTime(), currentProcess.getEndTime()));
 				queue.add(currentProcess);
 				currentProcess = process;
 				currentProcess.start(t);
@@ -61,6 +67,8 @@ public class SJF_P extends SchedulingAlgorithm{
 			while(!queue.isEmpty() && currentProcess.getRemainingBTime() <= Collections.min(queue, burstOrder).getRemainingBTime()){
 				if(currentProcess.getRemainingBTime() == 0){
 					currentProcess.destroy(t);
+					timeline.add(new Process(currentProcess.getProcessId(), 
+							currentProcess.getStartTime(), currentProcess.getEndTime()));
 					finished.add(currentProcess);
 					currentProcess = queue.remove(queue.indexOf(Collections.min(queue, burstOrder)));
 					currentProcess.start(t);
@@ -70,6 +78,8 @@ public class SJF_P extends SchedulingAlgorithm{
 			}
 			if(currentProcess.getEndTime() != 0){
 				currentProcess.stop(t);
+				timeline.add(new Process(currentProcess.getProcessId(), 
+						currentProcess.getStartTime(), currentProcess.getEndTime()));
 			}
 			queue.add(currentProcess);
 			currentProcess = queue.remove(queue.indexOf(Collections.min(queue, burstOrder)));
@@ -77,6 +87,8 @@ public class SJF_P extends SchedulingAlgorithm{
 		}
 		currentProcess.start(t);
 		currentProcess.destroy(t);
+		timeline.add(new Process(currentProcess.getProcessId(), 
+				currentProcess.getStartTime(), currentProcess.getEndTime()));
 		finished.add(currentProcess);
 		Collections.sort(finished);
 		processes = finished;

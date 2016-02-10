@@ -14,23 +14,29 @@ import java.util.Collections;
  */
 public abstract class SchedulingAlgorithm {
 	protected ArrayList<Process> processes;
+	protected ArrayList<Process> timeline;
 	protected double dAverageWaitingTime;
 	protected double dAverageTurnaroundTime;
 	
+	protected void getAverage(){
+		Collections.sort(processes);
+		for(Process process: processes){
+			dAverageWaitingTime += process.getWaitingTime();
+			dAverageTurnaroundTime += process.getTurnaroundTime();
+		}
+		dAverageWaitingTime = dAverageWaitingTime/processes.size();
+		dAverageTurnaroundTime = dAverageTurnaroundTime/processes.size();
+	}
+
+	public abstract void performScheduling();
+
 	public SchedulingAlgorithm(ArrayList<Process> processes){
 		this.processes = processes;
+		this.timeline = new ArrayList<Process>();
 	}
 	
 	public ArrayList<Process> getResults(){
 		return this.processes;
-	}
-	
-	public double getAverageWaitingTime() {
-		return dAverageWaitingTime;
-	}
-	
-	public double getAverageTurnaroundTime() {
-		return dAverageTurnaroundTime;
 	}
 	
 	public void generateResult(String sOutputFile) throws IOException {
@@ -51,20 +57,12 @@ public abstract class SchedulingAlgorithm {
 			sb.append(process.getTurnaroundTime());
 			pw.println(sb.toString());
 		}
-		pw.println(getAverageWaitingTime());
-		pw.println(getAverageTurnaroundTime());
+		pw.println(dAverageWaitingTime);
+		pw.println(dAverageTurnaroundTime);
 		bw.close();
-	}
-	
-	public void getAverage(){
-		Collections.sort(processes);
-		for(Process process: processes){
-			dAverageWaitingTime += process.getWaitingTime();
-			dAverageTurnaroundTime += process.getTurnaroundTime();
+		for(Process process : timeline){
+			System.out.println("PID: " + process.getProcessId() + " ST: "
+					+ process.getStartTime() + " ET: " + process.getEndTime());
 		}
-		dAverageWaitingTime = dAverageWaitingTime/processes.size();
-		dAverageTurnaroundTime = dAverageTurnaroundTime/processes.size();
 	}
-	
-	public abstract void performScheduling();
 }
