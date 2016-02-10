@@ -35,10 +35,6 @@ public abstract class SchedulingAlgorithm {
 		this.timeline = new ArrayList<Process>();
 	}
 	
-	public ArrayList<Process> getResults(){
-		return this.processes;
-	}
-	
 	public void generateResult(String sOutputFile) throws IOException {
 		BufferedWriter bw = new BufferedWriter(new FileWriter(sOutputFile, false));
 		PrintWriter pw = new PrintWriter(bw);
@@ -60,9 +56,5 @@ public abstract class SchedulingAlgorithm {
 		pw.println(dAverageWaitingTime);
 		pw.println(dAverageTurnaroundTime);
 		bw.close();
-		for(Process process : timeline){
-			System.out.println("PID: " + process.getProcessId() + " ST: "
-					+ process.getStartTime() + " ET: " + process.getEndTime());
-		}
 	}
 }
