@@ -53,16 +53,8 @@ public class Process implements Comparable<Process>, Comparator<Process>{
 		return iWaitingTime;
 	}
 
-	public void setWaitingTime(int iWaitingTime) {
-		this.iWaitingTime = iWaitingTime;
-	}
-
 	public int getTurnaroundTime() {
 		return iTurnaroundTime;
-	}
-
-	public void setTurnaroundTime(int iTurnaroundTime) {
-		this.iTurnaroundTime = iTurnaroundTime;
 	}
 
 	public int getStartTime() {
