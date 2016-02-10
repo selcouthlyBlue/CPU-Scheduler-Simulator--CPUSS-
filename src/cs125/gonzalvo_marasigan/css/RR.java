@@ -10,7 +10,10 @@ public class RR extends SchedulingAlgorithm {
 		super(processes);
 		this.iQuantum = iQuantum;
 	}
-
+	
+	/**
+	 * Performs scheduling using the Round Robin scheduling algorithm.
+	 */
 	@Override
 	public void performScheduling() {
 		// TODO Auto-generated method stub

@@ -12,11 +12,14 @@ public class SJF_P extends SchedulingAlgorithm{
 			return p1.getRemainingBTime() - p2.getRemainingBTime();
 		}
 	};
-
+	
 	public SJF_P(ArrayList<Process> processes) {
 		super(processes);
 	}
 	
+	/**
+	 * Performs scheduling using the Preemptive Shortest Job First Algorithm.
+	 */
 	@Override
 	public void performScheduling(){
 		ArrayList<Process> finished = new ArrayList<Process>();

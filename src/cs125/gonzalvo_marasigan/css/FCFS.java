@@ -8,7 +8,10 @@ public class FCFS extends SchedulingAlgorithm{
 	public FCFS(ArrayList<Process> processes) {
 		super(processes);
 	}
-
+	
+	/**
+	 * Performs scheduling using the First Come First Serve scheduling algorithm.
+	 */
 	@Override
 	public void performScheduling() {
 		Collections.sort(processes, new Process());

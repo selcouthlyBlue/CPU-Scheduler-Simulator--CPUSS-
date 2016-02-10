@@ -18,6 +18,13 @@ public class Process implements Comparable<Process>, Comparator<Process>{
 		
 	}
 	
+	/**
+	 * Primary constructor of the Process class
+	 * @param iProcessId
+	 * @param iArrivalTime
+	 * @param iBurstTime
+	 * @param iPriority
+	 */
 	public Process(int iProcessId, int iArrivalTime, int iBurstTime, int iPriority){
 		this.iProcessId = iProcessId;
 		this.iArrivalTime = iArrivalTime;
@@ -27,6 +34,13 @@ public class Process implements Comparable<Process>, Comparator<Process>{
 		this.iCurrentPriority = this.iPriority;
 	}
 	
+	/**
+	 * Secondary constructor of the Process class with known startTime
+	 * and endTime.
+	 * @param processId
+	 * @param startTime
+	 * @param endTime
+	 */
 	public Process(int processId, int startTime, int endTime) {
 		this.iProcessId = processId;
 		this.iStartTime = startTime;
@@ -73,23 +87,43 @@ public class Process implements Comparable<Process>, Comparator<Process>{
 		return iCurrentPriority;
 	}
 
+	/**
+	 * Increases the priority number of the process by 1.
+	 */
 	public void age() {
 		this.iCurrentPriority++;
 	}
-
+	
+	/**
+	 * Substracts 1 from the remaining burst time.
+	 */
 	public void run(){
 		this.iRemainingBTime--;
 	}
 	
+	/**
+	 * Starts the process and updates the waiting time
+	 * based on the time it started and the time it last stopped.
+	 * @param time
+	 */
 	public void start(int time){
 		this.iStartTime = time;
 		this.iWaitingTime += time - iEndTime;
 	}
 	
+	/**
+	 * Stops the process and updates the time it ended.
+	 * @param time
+	 */
 	public void stop(int time){
 		this.iEndTime = time;
 	}
 	
+	/**
+	 * Stops the process and updates the waiting time, the end time,
+	 * and the turnaround time.
+	 * @param time
+	 */
 	public void destroy(int time){
 		this.iEndTime = time + this.iRemainingBTime;
 		this.iWaitingTime -= this.iArrivalTime;

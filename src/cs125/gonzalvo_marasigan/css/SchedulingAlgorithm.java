@@ -18,6 +18,9 @@ public abstract class SchedulingAlgorithm {
 	protected double dAverageWaitingTime;
 	protected double dAverageTurnaroundTime;
 	
+	/**
+	 * Gets the Average Waiting Time and Average Turnaround Time 
+	 */
 	protected void getAverage(){
 		Collections.sort(processes);
 		for(Process process: processes){
@@ -30,6 +33,10 @@ public abstract class SchedulingAlgorithm {
 
 	public abstract void performScheduling();
 
+	/**
+	 * Constructor of the Scheduling Algorithm class
+	 * @param processes
+	 */
 	public SchedulingAlgorithm(ArrayList<Process> processes){
 		this.processes = processes;
 		this.timeline = new ArrayList<Process>();
