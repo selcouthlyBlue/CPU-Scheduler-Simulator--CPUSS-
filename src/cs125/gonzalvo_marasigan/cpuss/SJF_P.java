@@ -86,9 +86,10 @@ public class SJF_P extends SchedulingAlgorithm{
 			}
 			queue.add(currentProcess);
 			currentProcess = queue.remove(queue.indexOf(Collections.min(queue, burstOrder)));
-			currentProcess.start(t);
+			if(!queue.isEmpty()){
+				currentProcess.start(t);
+			}
 		}
-		currentProcess.start(t);
 		currentProcess.destroy(t);
 		timeline.add(new Process(currentProcess.getProcessId(), 
 				currentProcess.getStartTime(), currentProcess.getEndTime()));
