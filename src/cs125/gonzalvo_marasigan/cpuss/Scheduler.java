@@ -28,9 +28,9 @@ public class Scheduler {
 								Integer.parseInt(row[3]));
 						processes.add(process);
 					}
-					SchedulingAlgorithm sjfp = new SJF_P(processes);
-					sjfp.performScheduling();
-					sjfp.generateResult("sjfp_" + sCsvFile);
+					SchedulingAlgorithm fcfs = new FCFS(processes);
+					fcfs.performScheduling();
+					fcfs.generateResult("fcfs_" + sCsvFile);
 					/*SchedulingAlgorithm fcfs = new FCFS(processes);
 					fcfs.performScheduling();
 					fcfs.generateResult("fcfs_" + sCsvFile);
